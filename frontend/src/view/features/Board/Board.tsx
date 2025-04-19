@@ -14,7 +14,7 @@ const initialTasks = {
 
 export const Board = observer(function Board() {
   const handleClick = () => {
-    appModel.dialog.open(<TaskDialog text="тестттт" />);
+    appModel.dialog.open(<TaskDialog type="create" />);
   };
 
   const [tasks] = useState(initialTasks);
@@ -22,13 +22,17 @@ export const Board = observer(function Board() {
   return (
     <Box height={'100%'} sx={{ padding: 2 }}>
       <Grid container spacing={2} height={'100%'}>
-        <ColumnItem items={tasks.todo} onClick={handleClick} title="To Do" />
+        <ColumnItem
+          items={tasks.todo}
+          onClickCard={handleClick}
+          title="To Do"
+        />
         <ColumnItem
           items={tasks.inProgress}
-          onClick={handleClick}
+          onClickCard={handleClick}
           title="In Progress"
         />
-        <ColumnItem items={tasks.done} onClick={handleClick} title="Done" />
+        <ColumnItem items={tasks.done} onClickCard={handleClick} title="Done" />
       </Grid>
     </Box>
   );

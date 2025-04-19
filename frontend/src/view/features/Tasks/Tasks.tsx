@@ -1,21 +1,21 @@
 import { observer } from 'mobx-react-lite';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
+import { TasksModel } from './model';
 
 import { Box, Grid } from '@mui/material';
 
 import { ColumnItem } from '#view/shared/components';
 
-const initialTasks = {
-  projects: ['Купить молоко', 'Сделать зарядку', 'Купить молоко'],
-};
-
 type TasksProps = {
   children: ReactNode;
 };
 
-export const Tasks = observer(function Tasks({ children }: TasksProps) {
-  const [tasks] = useState(initialTasks);
+type TasksComponentProps = {
+  model: TasksModel;
+  children: ReactNode;
+};
 
+const TasksComponent = observer(({ model, children }: TasksComponentProps) => {
   return (
     <Box
       height={'100%'}
@@ -25,8 +25,18 @@ export const Tasks = observer(function Tasks({ children }: TasksProps) {
     >
       {children}
       <Grid height={'calc(100% - 80px)'}>
-        <ColumnItem items={tasks.projects} buttonColumn={true} />
+        <ColumnItem
+          items={model.tasks}
+          buttonColumn={true}
+          onClickButtonColumn={() => model.createNewTask()}
+          onClickCard={(task) => model.editTask(task)}
+        />
       </Grid>
     </Box>
   );
 });
+
+export const Tasks = ({ children }: TasksProps) => {
+  const model = new TasksModel();
+  return <TasksComponent model={model}>{children}</TasksComponent>;
+};

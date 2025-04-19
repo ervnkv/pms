@@ -1,11 +1,14 @@
+//** Убрать ts-nocheck */
 import { Box, Typography, Paper, Grid, Button } from '@mui/material';
+import { Task } from '#shared/types';
 import { CardElement } from './CardElement';
 
-type ColumnItemProps<T> = {
-  items: T[];
+type ColumnItemProps = {
+  items: Task[];
   buttonColumn?: boolean;
   buttonCard?: boolean;
-  onClick?: () => void;
+  onClickCard?: (item: Task) => void;
+  onClickButtonColumn?: () => void;
   title?: string;
 };
 
@@ -13,9 +16,10 @@ export const ColumnItem = ({
   items,
   buttonColumn,
   buttonCard,
-  onClick,
+  onClickCard,
+  onClickButtonColumn,
   title,
-}: ColumnItemProps<string>) => {
+}: ColumnItemProps) => {
   return (
     <Grid flexGrow={1} height={buttonColumn ? 'calc(100% - 70px)' : '100%'}>
       <Paper
@@ -45,19 +49,27 @@ export const ColumnItem = ({
           </Typography>
         ) : null}
         <Box display="flex" flexDirection="column" gap={1} padding={1}>
-          {items.map((task, index) => (
-            <CardElement
-              key={index}
-              task={task}
-              button={buttonCard}
-              onClick={onClick}
-            />
-          ))}
+          {items.map((task, index) => {
+            //** TO-DO Исправить props Card добавить необходимые props, Валидация длины описания, кнопка развернуть */
+
+            return (
+              <CardElement
+                key={index}
+                task={task.description}
+                button={buttonCard}
+                onClick={() => onClickCard?.(task)}
+              />
+            );
+          })}
         </Box>
       </Paper>
       {buttonColumn ? (
         <Box display={'flex'} justifyContent={'right'} margin={1} padding={1}>
-          <Button variant="contained" sx={{ mr: 1, textTransform: 'none' }}>
+          <Button
+            variant="contained"
+            sx={{ mr: 1, textTransform: 'none' }}
+            onClick={onClickButtonColumn}
+          >
             <Typography variant="h5">Создать задачу</Typography>
           </Button>
         </Box>
