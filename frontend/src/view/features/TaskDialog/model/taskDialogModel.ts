@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-import { appModel } from '#view/app';
+import { appModel } from '#view/app/model';
 
 export type TaskDialogModelProps = {
   text: string;
