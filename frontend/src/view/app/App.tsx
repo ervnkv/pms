@@ -1,8 +1,7 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-
-import { appModel } from './model';
 import './App.css';
+import { appModel } from './model';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
 const theme = createTheme({
   components: {

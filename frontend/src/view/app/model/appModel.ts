@@ -1,11 +1,7 @@
-import { configure, makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 import { dialogModel } from './dialogModel';
 import { routerModel } from './routerModel';
-
-configure({
-  enforceActions: 'never',
-});
 
 class AppModel {
   public readonly dialog = dialogModel;

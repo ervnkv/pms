@@ -11,10 +11,10 @@ export function Header() {
   return (
     <AppBar position="static" color="default" elevation={1}>
       <Container maxWidth={'xl'}>
-        <Toolbar>
-          <Box sx={{ display: 'flex', gap: 5, ml: 3 }}>
+        <Toolbar sx={{ pl: 2, pr: 2 }} disableGutters>
+          <Box sx={{ display: 'flex', gap: 5, ml: 1 }}>
             <Typography
-              variant="h5"
+              variant="h4"
               component="a"
               href="#"
               sx={{
@@ -26,7 +26,7 @@ export function Header() {
               Все задачи
             </Typography>
             <Typography
-              variant="h5"
+              variant="h4"
               component="a"
               href="#"
               sx={{
@@ -35,7 +35,7 @@ export function Header() {
                 '&:hover': { color: 'primary.main' },
               }}
             >
-              Проекты
+              Доски
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
@@ -43,7 +43,7 @@ export function Header() {
             <Typography
               variant="h5"
               sx={{
-                textTransform: 'capitalize',
+                textTransform: 'none',
               }}
             >
               Создать задачу
