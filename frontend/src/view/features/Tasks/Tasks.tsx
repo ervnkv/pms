@@ -1,21 +1,16 @@
-import { observer } from 'mobx-react-lite';
-import { ReactNode } from 'react';
-import { TasksModel } from './model';
-
 import { Box, Grid } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 
 import { ColumnItem } from '#view/shared/components';
 
-type TasksProps = {
-  children: ReactNode;
-};
+import { Filter, Search } from './components';
+import { TasksModel } from './model';
 
 type TasksComponentProps = {
   model: TasksModel;
-  children: ReactNode;
 };
 
-const TasksComponent = observer(({ model, children }: TasksComponentProps) => {
+const TasksComponent = observer(({ model }: TasksComponentProps) => {
   return (
     <Box
       height={'100%'}
@@ -23,7 +18,15 @@ const TasksComponent = observer(({ model, children }: TasksComponentProps) => {
       flexDirection={'column'}
       sx={{ padding: 1 }}
     >
-      {children}
+      <Box
+        display={'flex'}
+        justifyContent={'space-between'}
+        m={1}
+        height={'60px'}
+      >
+        <Search model={model} />
+        <Filter model={model} />
+      </Box>
       <Grid height={'calc(100% - 80px)'}>
         <ColumnItem
           items={model.tasks}
@@ -36,7 +39,7 @@ const TasksComponent = observer(({ model, children }: TasksComponentProps) => {
   );
 });
 
-export const Tasks = ({ children }: TasksProps) => {
+export const Tasks = () => {
   const model = new TasksModel();
-  return <TasksComponent model={model}>{children}</TasksComponent>;
+  return <TasksComponent model={model} />;
 };
