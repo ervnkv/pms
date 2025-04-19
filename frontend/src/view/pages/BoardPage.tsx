@@ -6,7 +6,20 @@ import { Layout } from '#view/shared/components';
 
 export const BoardPage = observer(function BoardPage() {
   const handleClick = () => {
-    appModel.dialog.open(<TaskDialog text="тестттт" />);
+    appModel.dialog.open(
+      <TaskDialog
+        board={{
+          "id": 4,
+          "name": "Миграция на новую БД",
+          "description": "Перенос данных на PostgreSQL 15",
+          "taskCount": 8
+      }}
+        task={null}
+        type="create"
+        disableFieldBoard={false}
+        showButtonToBoard
+      />,
+    );
   };
   return (
     <Layout>

@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import { ReactNode } from 'react';
+
 import { Header } from '../Header';
 
 type LayoutProps = {
