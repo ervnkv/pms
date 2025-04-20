@@ -20,17 +20,11 @@ type GetTasksOnBoardResponse = {
 };
 
 export class BoardsController {
-  private queryService: QueryService;
 
-  constructor(queryService: QueryService) {
-    this.queryService = queryService;
-  }
+  constructor(private queryService: QueryService) {}
 
-  public async getBoards(signal?: AbortSignal): Promise<Board[] | ApiError> {
-    const res = await this.queryService.get<GetBoardsResponse>(
-      '/boards',
-      signal,
-    );
+  public async getBoards(): Promise<Board[] | ApiError> {
+    const res = await this.queryService.get<GetBoardsResponse>('/boards');
 
     if (res instanceof ApiError) {
       return res;
@@ -39,14 +33,8 @@ export class BoardsController {
     return res.data;
   }
 
-  public async getTasksOnBoard(
-    board: Board,
-    signal?: AbortSignal,
-  ): Promise<Task[] | ApiError> {
-    const res = await this.queryService.get<GetTasksOnBoardResponse>(
-      `/boards/${board.id}`,
-      signal,
-    );
+  public async getTasksOnBoard(board: Board): Promise<Task[] | ApiError> {
+    const res = await this.queryService.get<GetTasksOnBoardResponse>(`/boards/${board.id}`);
 
     if (res instanceof ApiError) {
       return res;
