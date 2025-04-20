@@ -1,11 +1,12 @@
 import { makeAutoObservable } from 'mobx';
+
 import {
   BoardsController,
   boardsController,
 } from '#controller/BoardsController';
 import { Task } from '#shared/types';
-import { appModel } from '#view/app';
 import { ApiError } from '#shared/utils';
+import { appModel } from '#view/app';
 
 export class BoardModel {
   private readonly boardsController: BoardsController = boardsController;

@@ -1,6 +1,5 @@
-import { observer } from 'mobx-react-lite';
-
 import { Box, Grid } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 
 import { ColumnItem } from '#view/shared/components';
 

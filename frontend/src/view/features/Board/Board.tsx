@@ -1,8 +1,8 @@
-import { observer } from 'mobx-react-lite';
-import { ColumnItem } from '#view/shared/components';
-import { BoardModel } from '#view/features/';
-
 import { Box, Grid } from '@mui/material';
+import { observer } from 'mobx-react-lite';
+
+import { BoardModel } from '#view/features/';
+import { ColumnItem } from '#view/shared/components';
 
 type BoardComponentProps = {
   model: BoardModel;

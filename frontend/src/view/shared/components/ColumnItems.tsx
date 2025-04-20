@@ -1,5 +1,7 @@
 import { Box, Typography, Paper, Grid, Button } from '@mui/material';
+
 import { Board, Task } from '#shared/types';
+
 import { CardElement } from './CardElement';
 
 type ColumnItemProps = {
