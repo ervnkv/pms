@@ -1,5 +1,8 @@
 import { Box, Grid } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
+
+import { Board } from '#shared/types';
 
 import { BoardsColumn } from './components';
 import { BoardsModel } from './model';
@@ -21,7 +24,11 @@ const BoardsComponent = observer(({ model }: BoardsComponentProps) => {
   );
 });
 
-export const Boards = () => {
-  const model = new BoardsModel();
-  return <BoardsComponent model={model} />;
+export type BoardsProps = {
+  boards: Board[];
 };
+
+export const Boards = React.memo((props: BoardsProps) => {
+  const model = new BoardsModel(props);
+  return <BoardsComponent model={model} />;
+});
