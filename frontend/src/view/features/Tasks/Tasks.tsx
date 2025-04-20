@@ -1,9 +1,11 @@
 import { Box, Grid } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import { ColumnItem } from '#view/shared/components';
-
-import { Filter, Search } from './components';
+import { Filter, Search, TasksColumn } from './components';
+import {
+  TASKS_COLUMN_HEIGHT,
+  TASKS_FILTER_SEARCH_BOX_HEIGHT,
+} from './constants';
 import { TasksModel } from './model';
 
 type TasksComponentProps = {
@@ -22,17 +24,16 @@ const TasksComponent = observer(({ model }: TasksComponentProps) => {
         display={'flex'}
         justifyContent={'space-between'}
         m={1}
-        height={'60px'}
+        height={TASKS_FILTER_SEARCH_BOX_HEIGHT}
       >
         <Search model={model} />
         <Filter model={model} />
       </Box>
-      <Grid height={'calc(100% - 80px)'}>
-        <ColumnItem
+      <Grid height={TASKS_COLUMN_HEIGHT}>
+        <TasksColumn
           items={model.tasks}
-          buttonColumn={true}
-          onClickButtonColumn={() => model.createNewTask()}
-          onClickCard={(task) => model.editTask(task)}
+          onClickTask={model.editTask}
+          onClickButton={model.createNewTask}
         />
       </Grid>
     </Box>

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import {
   BoardsController,
   boardsController,
@@ -33,7 +34,8 @@ export class BoardsModel {
     }
   };
 
-  public navigateBoard = (boardId: string) => {
+  /**Private  */
+  public navigateBoard = (boardId: number) => {
     const path = '/board/' + boardId;
     this.appModel.router.navigate(path);
   };
