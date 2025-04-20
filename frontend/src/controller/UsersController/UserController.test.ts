@@ -1,11 +1,12 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import axios, { AxiosInstance } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { UsersController } from './UsersController';
-import { QueryService } from '#service/QueryService';
-import { ApiError } from '#shared/utils';
-import { User } from '#shared/types';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
+import { QueryService } from '#service/QueryService';
+import { User } from '#shared/types';
+import { ApiError } from '#shared/utils';
+
+import { UsersController } from './UsersController';
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -91,7 +92,9 @@ describe('UsersController', () => {
       const result = await usersController.getUsers();
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 500');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 500',
+      );
     });
 
     it('возвращает пустой массив при пустом ответе', async () => {

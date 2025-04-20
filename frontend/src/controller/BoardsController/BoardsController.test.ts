@@ -1,9 +1,11 @@
-import { QueryService } from '#service/QueryService';
-import { Board, Priority, Status, Task } from '#shared/types';
-import { ApiError } from '#shared/utils';
 import axios, { AxiosInstance } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+
+import { QueryService } from '#service/QueryService';
+import { Board, Priority, Status, Task } from '#shared/types';
+import { ApiError } from '#shared/utils';
+
 import { BoardsController } from './BoardsController';
 
 describe('BoardsController', () => {
@@ -65,7 +67,9 @@ describe('BoardsController', () => {
       const result = await boardsController.getBoards();
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 500');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 500',
+      );
     });
 
     it('возвращает пустой массив при пустом ответе', async () => {
@@ -173,12 +177,16 @@ describe('BoardsController', () => {
     });
 
     it('возвращает ApiError при ошибке запроса', async () => {
-      mock.onGet(`/boards/${mockBoard.id}`).reply(404, { message: 'Board not found' });
+      mock
+        .onGet(`/boards/${mockBoard.id}`)
+        .reply(404, { message: 'Board not found' });
 
       const result = await boardsController.getTasksOnBoard(mockBoard);
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 404');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 404',
+      );
     });
 
     it('возвращает пустой массив при пустом ответе', async () => {

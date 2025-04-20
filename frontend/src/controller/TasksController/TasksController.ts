@@ -51,7 +51,6 @@ type UpdateTaskStatusResponse = {
 };
 
 export class TasksController {
-
   constructor(private queryService: QueryService) {}
 
   public async getTasks(): Promise<Task[] | ApiError> {
@@ -64,9 +63,7 @@ export class TasksController {
     return res.data;
   }
 
-  public async createTask(
-    task: Task,
-  ): Promise<ID | ApiError> {
+  public async createTask(task: Task): Promise<ID | ApiError> {
     const createTaskData: CreateTaskRequest = {
       boardId: task.boardId,
       description: task.description,
@@ -87,9 +84,7 @@ export class TasksController {
     return res.data;
   }
 
-  public async updateTask(
-    task: Task,
-  ): Promise<Message | ApiError> {
+  public async updateTask(task: Task): Promise<Message | ApiError> {
     const updateTaskData: UpdateTaskRequest = {
       description: task.description,
       title: task.title,
@@ -110,9 +105,7 @@ export class TasksController {
     return res.data;
   }
 
-  public async updateTaskStatus(
-    task: Task,
-  ): Promise<Message | ApiError> {
+  public async updateTaskStatus(task: Task): Promise<Message | ApiError> {
     const updateTaskStatusData: UpdateTaskStatusRequest = {
       status: task.status,
     };

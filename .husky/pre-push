@@ -1,3 +1,5 @@
+cd frontend
+
 npm run lint-check
 echo -e "\x1b[32m Lint OK \x1b[0m"
 

@@ -1,7 +1,6 @@
 import { QueryService, queryService } from '#service/QueryService';
 
 export class AppController {
-
   constructor(private queryService: QueryService) {}
 
   /** Прерывает все активные запросы приложения */

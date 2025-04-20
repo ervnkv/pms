@@ -1,11 +1,12 @@
-import { QueryService } from '#service/QueryService';
-import { Priority, Status, Task } from '#shared/types';
-import { ApiError } from '#shared/utils';
 import axios, { AxiosInstance } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { TasksController } from './TasksController';
 
+import { QueryService } from '#service/QueryService';
+import { Priority, Status, Task } from '#shared/types';
+import { ApiError } from '#shared/utils';
+
+import { TasksController } from './TasksController';
 
 describe('TaskController', () => {
   let taskController: TasksController;
@@ -71,7 +72,9 @@ describe('TaskController', () => {
       const result = await taskController.getTasks();
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 500');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 500',
+      );
     });
 
     it('возвращает пустой массив при пустом ответе', async () => {
@@ -144,12 +147,16 @@ describe('TaskController', () => {
         assigneeId: mockTask.assignee.id,
       };
 
-      mock.onPost('/tasks/create', expectedRequest).reply(400, { message: 'Invalid data' });
+      mock
+        .onPost('/tasks/create', expectedRequest)
+        .reply(400, { message: 'Invalid data' });
 
       const result = await taskController.createTask(mockTask);
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 400');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 400',
+      );
     });
 
     it('возвращает ApiError при сетевой ошибке', async () => {
@@ -200,7 +207,9 @@ describe('TaskController', () => {
         status: mockTask.status,
       };
 
-      mock.onPut(`/tasks/${mockTask.id}`, expectedRequest).reply(200, mockResponse);
+      mock
+        .onPut(`/tasks/${mockTask.id}`, expectedRequest)
+        .reply(200, mockResponse);
 
       const result = await taskController.updateTask(mockTask);
 
@@ -217,12 +226,16 @@ describe('TaskController', () => {
         status: mockTask.status,
       };
 
-      mock.onPut(`/tasks/${mockTask.id}`, expectedRequest).reply(404, { message: 'Task not found' });
+      mock
+        .onPut(`/tasks/${mockTask.id}`, expectedRequest)
+        .reply(404, { message: 'Task not found' });
 
       const result = await taskController.updateTask(mockTask);
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 404');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 404',
+      );
     });
 
     it('возвращает ApiError при сетевой ошибке', async () => {
@@ -269,7 +282,9 @@ describe('TaskController', () => {
         status: mockTask.status,
       };
 
-      mock.onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest).reply(200, mockResponse);
+      mock
+        .onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest)
+        .reply(200, mockResponse);
 
       const result = await taskController.updateTaskStatus(mockTask);
 
@@ -282,12 +297,16 @@ describe('TaskController', () => {
         status: mockTask.status,
       };
 
-      mock.onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest).reply(404, { message: 'Task not found' });
+      mock
+        .onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest)
+        .reply(404, { message: 'Task not found' });
 
       const result = await taskController.updateTaskStatus(mockTask);
 
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toBe('Request failed with status code 404');
+      expect((result as ApiError).text).toBe(
+        'Request failed with status code 404',
+      );
     });
 
     it('возвращает ApiError при сетевой ошибке', async () => {
@@ -295,7 +314,9 @@ describe('TaskController', () => {
         status: mockTask.status,
       };
 
-      mock.onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest).networkError();
+      mock
+        .onPut(`/tasks/updateStatus/${mockTask.id}`, expectedRequest)
+        .networkError();
 
       const result = await taskController.updateTaskStatus(mockTask);
 

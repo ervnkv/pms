@@ -1,10 +1,10 @@
+import { Box, Grid } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
+
 import { appModel } from '#view/app/';
 import { TaskDialog } from '#view/features/';
 import { ColumnItem } from '#view/shared/components';
-
-import { Box, Grid } from '@mui/material';
 
 const initialTasks = {
   todo: ['Купить молоко', 'Сделать зарядку', 'Купить молоко'],

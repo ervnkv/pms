@@ -20,7 +20,6 @@ type GetTasksOnBoardResponse = {
 };
 
 export class BoardsController {
-
   constructor(private queryService: QueryService) {}
 
   public async getBoards(): Promise<Board[] | ApiError> {
@@ -34,7 +33,9 @@ export class BoardsController {
   }
 
   public async getTasksOnBoard(board: Board): Promise<Task[] | ApiError> {
-    const res = await this.queryService.get<GetTasksOnBoardResponse>(`/boards/${board.id}`);
+    const res = await this.queryService.get<GetTasksOnBoardResponse>(
+      `/boards/${board.id}`,
+    );
 
     if (res instanceof ApiError) {
       return res;

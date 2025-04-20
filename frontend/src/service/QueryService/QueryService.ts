@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, isAxiosError } from 'axios';
+
 import { ApiError } from '#shared/utils';
 
 export class QueryService {
@@ -17,7 +18,9 @@ export class QueryService {
     this.abortControllers.add(controller);
 
     try {
-      const response = await this.query.get<R>(url, { signal: controller.signal });
+      const response = await this.query.get<R>(url, {
+        signal: controller.signal,
+      });
       return response.data;
     } catch (error) {
       return QueryService.createError(error);
@@ -32,7 +35,9 @@ export class QueryService {
     this.abortControllers.add(controller);
 
     try {
-      const response = await this.query.post<R>(url, data, { signal: controller.signal });
+      const response = await this.query.post<R>(url, data, {
+        signal: controller.signal,
+      });
       return response.data;
     } catch (error) {
       return QueryService.createError(error);
@@ -47,7 +52,9 @@ export class QueryService {
     this.abortControllers.add(controller);
 
     try {
-      const response = await this.query.put<R>(url, data, { signal: controller.signal });
+      const response = await this.query.put<R>(url, data, {
+        signal: controller.signal,
+      });
       return response.data;
     } catch (error) {
       return QueryService.createError(error);

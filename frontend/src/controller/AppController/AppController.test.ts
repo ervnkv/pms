@@ -1,9 +1,11 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import axios, { AxiosInstance } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { AppController } from './AppController';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+
 import { QueryService } from '#service/QueryService';
 import { ApiError } from '#shared/utils';
+
+import { AppController } from './AppController';
 
 // Мокируем import.meta.env
 vi.stubEnv('VITE_API_URL', 'test-api');
@@ -50,7 +52,14 @@ describe('AppController', () => {
 
     it('прерывает активные запросы через queryService', async () => {
       // Настраиваем мок для долгого запроса
-      mock.onGet('/test').reply(() => new Promise((resolve) => setTimeout(() => resolve([200, { data: 'ok' }]), 100)));
+      mock
+        .onGet('/test')
+        .reply(
+          () =>
+            new Promise((resolve) =>
+              setTimeout(() => resolve([200, { data: 'ok' }]), 100),
+            ),
+        );
 
       // Шпионим за методом get для проверки вызова
       const getSpy = vi.spyOn(axiosInstance, 'get');
@@ -72,7 +81,9 @@ describe('AppController', () => {
 
       // Проверяем, что запрос был прерван
       expect(result).toBeInstanceOf(ApiError);
-      expect((result as ApiError).text).toMatch(/canceled|Request aborted|Operation canceled/);
+      expect((result as ApiError).text).toMatch(
+        /canceled|Request aborted|Operation canceled/,
+      );
 
       // Проверяем, что abortControllers очищены
       expect(queryService['abortControllers'].size).toBe(0);

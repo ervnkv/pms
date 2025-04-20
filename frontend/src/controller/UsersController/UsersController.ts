@@ -17,7 +17,6 @@ type GetUsersResponse = {
 };
 
 export class UsersController {
-
   constructor(private queryService: QueryService) {}
 
   public async getUsers(): Promise<User[] | ApiError> {
