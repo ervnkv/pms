@@ -3,9 +3,11 @@ import { ReactNode } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { BoardPage, BoardsPage, TasksPage, NotFoundPage } from '#view/pages';
+import { appController } from '#controller/AppController';
 
 class RouterModel {
   private router: ReturnType<typeof createBrowserRouter> | null = null;
+  private appController = appController; 
 
   constructor() {
     makeAutoObservable(this);
@@ -15,6 +17,7 @@ class RouterModel {
 
   public navigate = (path: string) => {
     if (this.router) {
+      this.appController.abortAll();
       this.router.navigate(path);
     }
   };

@@ -50,15 +50,12 @@ type UpdateTaskStatusResponse = {
   data: Message;
 };
 
-export class TaskController {
-  private queryService: QueryService;
+export class TasksController {
 
-  constructor(queryService: QueryService) {
-    this.queryService = queryService;
-  }
+  constructor(private queryService: QueryService) {}
 
-  public async getTasks(signal?: AbortSignal): Promise<Task[] | ApiError> {
-    const res = await this.queryService.get<GetTasksResponse>('/tasks', signal);
+  public async getTasks(): Promise<Task[] | ApiError> {
+    const res = await this.queryService.get<GetTasksResponse>('/tasks');
 
     if (res instanceof ApiError) {
       return res;
@@ -69,7 +66,6 @@ export class TaskController {
 
   public async createTask(
     task: Task,
-    signal?: AbortSignal,
   ): Promise<ID | ApiError> {
     const createTaskData: CreateTaskRequest = {
       boardId: task.boardId,
@@ -82,7 +78,7 @@ export class TaskController {
     const res = await this.queryService.post<
       CreateTaskRequest,
       CreateTaskResponse
-    >('/tasks/create', createTaskData, signal);
+    >('/tasks/create', createTaskData);
 
     if (res instanceof ApiError) {
       return res;
@@ -93,7 +89,6 @@ export class TaskController {
 
   public async updateTask(
     task: Task,
-    signal?: AbortSignal,
   ): Promise<Message | ApiError> {
     const updateTaskData: UpdateTaskRequest = {
       description: task.description,
@@ -106,7 +101,7 @@ export class TaskController {
     const res = await this.queryService.put<
       UpdateTaskRequest,
       UpdateTaskResponse
-    >(`/tasks/${task.id}`, updateTaskData, signal);
+    >(`/tasks/${task.id}`, updateTaskData);
 
     if (res instanceof ApiError) {
       return res;
@@ -117,7 +112,6 @@ export class TaskController {
 
   public async updateTaskStatus(
     task: Task,
-    signal?: AbortSignal,
   ): Promise<Message | ApiError> {
     const updateTaskStatusData: UpdateTaskStatusRequest = {
       status: task.status,
@@ -126,7 +120,7 @@ export class TaskController {
     const res = await this.queryService.put<
       UpdateTaskStatusRequest,
       UpdateTaskStatusResponse
-    >(`/tasks/updateStatus/${task.id}`, updateTaskStatusData, signal);
+    >(`/tasks/updateStatus/${task.id}`, updateTaskStatusData);
 
     if (res instanceof ApiError) {
       return res;
@@ -144,4 +138,4 @@ export class TaskController {
   }
 }
 
-export const tasksController = new TaskController(queryService);
+export const tasksController = new TasksController(queryService);
