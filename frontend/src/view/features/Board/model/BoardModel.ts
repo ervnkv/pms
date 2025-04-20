@@ -1,59 +1,40 @@
 import { makeAutoObservable } from 'mobx';
 
-import {
-  BoardsController,
-  boardsController,
-} from '#controller/BoardsController';
-import { Task } from '#shared/types';
-import { ApiError } from '#shared/utils';
+import { Board, Task } from '#shared/types';
 import { appModel } from '#view/app';
-import { TaskDialog, TaskDialogModelProps } from '#view/features/TaskDialog';
+import { TaskDialog, TaskDialogModelProps } from '#view/features';
+
+import { BoardProps } from '../Board';
 
 export class BoardModel {
-  private readonly boardsController: BoardsController = boardsController;
-  private tasks: Task[] = [];
-  private boardId: number | null = null;
-  public isLoading: boolean = true;
-  public isError: boolean = false;
-  public taskToDo: Task[] = [];
-  public taskInProgress: Task[] = [];
-  public taskDone: Task[] = [];
+  public tasks: Task[];
+  public board: Board;
 
-  constructor() {
+  private getBoardTasks: VoidFunction;
+
+  constructor(props: BoardProps) {
     makeAutoObservable(this);
 
-    this.setBoardId();
-    this.getTasks();
+    this.tasks = props.tasks;
+    this.board = props.board;
+    this.getBoardTasks = props.getBoardTasks;
   }
 
-  private setBoardId = () => {
-    const path = appModel.router.getCurrentLocation();
-    const match = path.match(/^\/board\/(\d+)$/);
-    this.boardId = match ? +match[1] : null;
-  };
-
-  private getTasks = async () => {
-    if (this.boardId) {
-      const res = await this.boardsController.getTasksOnBoard(this.boardId);
-      if (res instanceof ApiError) {
-        this.isLoading = false;
-        this.isError = true;
-      } else {
-        this.tasks = res;
-        this.taskToDo = this.tasks.filter(({ status }) => status === 'Backlog');
-        this.taskInProgress = this.tasks.filter(
-          ({ status }) => status === 'InProgress',
-        );
-        this.taskDone = this.tasks.filter(({ status }) => status === 'Done');
-      }
-    }
-  };
+  public get taskToDo() {
+    return this.tasks.filter(({ status }) => status === 'Backlog');
+  }
+  public get taskInProgress() {
+    return this.tasks.filter(({ status }) => status === 'InProgress');
+  }
+  public get taskDone() {
+    return this.tasks.filter(({ status }) => status === 'Done');
+  }
 
   public editTask = (task: Task) => {
     const taskDialogProps: TaskDialogModelProps = {
-      board: null,
-      disableFieldBoard: false,
-      onSuccess: () => this.getTasks(),
+      board: this.board,
+      disableFieldBoard: true,
+      onSuccess: () => this.getBoardTasks(),
       showButtonToBoard: false,
       task,
       type: 'edit',

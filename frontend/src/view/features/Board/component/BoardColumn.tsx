@@ -28,17 +28,11 @@ export const BoardColumn = ({
       >
         <Typography
           position={'sticky'}
-          top={0}
           padding={2}
-          zIndex={10}
-          bgcolor="background.paper"
-          variant="h6"
           align="left"
-          sx={{
-            paddingBottom: 1,
-            borderBottom: '2px solid #ccc',
-            backgroundColor: 'background.paper',
-          }}
+          paddingBottom={1}
+          borderBottom={'2px solid #ccc'}
+          fontWeight={500}
         >
           {title}
         </Typography>
