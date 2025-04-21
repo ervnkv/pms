@@ -1,3 +1,15 @@
+
+Запускать докер
+
+docker-compose up --build
+
+доступны переменные
+SERVER_HOST_PORT - внешний порт бекенда (по умолчанию 8080)
+FRONTEND_HOST_PORT - внешний порт фронтенда (по умолчанию 3000)
+FRONTEND_API_URL - адрес на который будет ходить фронтенд (по умолчанию http://localhost:8080/api/v1)
+
+$env:SERVER_HOST_PORT="8888"; $env:FRONTEND_HOST_PORT="5555"; $env:FRONTEND_API_URL="http://localhost:8888/api/v1"; docker-compose up --build
+
 # Project-Management-system
 
 ### 📬 Контакты
